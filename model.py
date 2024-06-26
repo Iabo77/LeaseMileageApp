@@ -16,4 +16,7 @@ def get_mileage_document():
     return mileagedocument
 
 def save_mileage_document():
+    client = MongoClient(os.getenv('CONNECTIONSTRING'))
+    database = client[os.getenv('DATABASENAME')]
+    collection = database[os.getenv('COLLECTION')]
     return

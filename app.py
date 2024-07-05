@@ -5,6 +5,8 @@ from datetime import date
 
 
 import logging
+logging.basicConfig(level=logging.DEBUG)
+logging.getLogger('werkzeug').setLevel(logging.INFO)
 
 
 app = Flask(__name__)
@@ -14,25 +16,25 @@ app.config['DEBUG'] = True
 log = logging.getLogger(__name__)
 
 @app.route('/')
-def enter_mileage(supplied_date = date.today()):
-    date_to_record=supplied_date.strftime('%Y-%m-%d') 
-    return render_template('main.html', date_to_record = date_to_record)
+def index():    
+    if not controller.is_database_configured_correctly():
+        return render_template('error.html')
+    if controller.does_config_exist():        
+        return render_template('main.html')      
+    else:
+        log.warning('Database in empty, redirecting to setconfig.html')
+        return render_template('setconfig.html') 
 
 @app.route ('/savemileage')
 def save_mileage():
-    number = request.form['number']
-    selected_date = request.form['date']
-    print (f'{number}:{selected_date}')
-    entered_mileage = 10
-    specified_date = 2
-    #controller.insert_new_mileage_record(entered_mileage, specified_date)
+      
 
-    return redirect()
+    return 
 
 @app.route('/mileagehistory')
 def mileage_history():
     #mileagedata = controller.get_mileage_data_from_database()
-    mileage_records = {'soemdate':10101, 'someotherdate': 119191 }     
+    mileage_records = {'somedate':10101, 'someotherdate': 119191 }     
     return render_template('mileagehistory.html', mileage_records=mileage_records)
 
 

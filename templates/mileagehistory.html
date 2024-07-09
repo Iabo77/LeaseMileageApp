@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% block content %}
+<body>
+    <h1>Mileage Records</h1>
+        <body>
+             <ul>
+                {% for item in mileage_history %}
+                <li>Date: {{ item.date }}, Mileage: {{ item.mileage }}</li>
+                {% endfor %}
+            </ul>
+</body>
+{% endblock %}
